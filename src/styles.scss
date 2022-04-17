@@ -1,0 +1,69 @@
+/* You can add global styles to this file, and also import other style files */
+
+$btn-warning-color: #EED010;
+$btn-warning-hover-color: #BFA500;
+
+$primary-color: #918BCB;
+$primary-hover-color: #615B9D;
+
+$btn-outline-primary-color:#3bbbed;
+$btn-outline-primary-hover-color: #ffffff;
+
+$btn-outline-danger-color:#ff264e;
+$btn-outline-danger-hover-color: #ffffff;
+
+$light-purple: #d6d2fc;
+$dark-purple: #6f68ad;
+
+.btn-warning {
+  background-color: $btn-warning-color !important;
+  border-color: $btn-warning-color !important;
+}
+
+.btn-warning:hover {
+  background-color: $btn-warning-hover-color !important;
+  border-color: $btn-warning-hover-color !important;
+}
+
+.btn-primary {
+  background-color: $primary-color !important;
+  border-color: $primary-color !important;
+}
+
+.btn-primary:hover {
+  background-color: $primary-hover-color !important;
+  border-color: $primary-hover-color !important;
+}
+
+.btn-outline-primary {
+  color: $btn-outline-primary-color !important;
+  border-color: $btn-outline-primary-color !important;
+}
+
+.btn-outline-primary:hover {
+  color: $btn-outline-primary-hover-color !important;
+  background-color: $btn-outline-primary-color !important;
+}
+
+.btn-outline-danger {
+  color: $btn-outline-danger-color !important;
+  border-color: $btn-outline-danger-color !important;
+}
+
+.btn-outline-danger:hover {
+  color: $btn-outline-danger-hover-color !important;
+  background-color: $btn-outline-danger-color !important;
+}
+
+.alert-primary {
+  background-color: $light-purple;
+  color: $dark-purple;
+  border-color: $primary-hover-color;
+}
+
+.wide-container {
+  max-width: 100vw;
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

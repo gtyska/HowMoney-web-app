@@ -1,0 +1,59 @@
+ <div class="table-responsive">
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col" class="col-3">Asset</th>
+        <th scope="col" class="col-5">Value</th>
+        <th scope="col" class="col-1"></th>
+        <th scope="col" class="col-2"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let asset of assets">
+        <td class="col-3">
+          {{asset.name}}
+        </td>
+        <td class="col-5">
+          {{asset.amount}}
+        </td>
+        <td class="col-1">
+          <a class="btn btn-outline-primary" routerLink="/asset-detail/{{asset.idAsset}}" role="button">
+            Edit
+          </a>
+        </td>
+        <td class="col-2">
+          <button class="btn btn-outline-danger" title="delete asset" type="button">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+
+
+
+
+
+<!-- <ul class="assets">
+  <li *ngFor="let asset of assets">
+    <button [class.selected]="asset === selectedAsset" type="button" (click)="onSelect(asset)">
+      <span class="badge">{{asset.idAsset}}</span>
+      <span class="name">{{asset.name}}</span>
+    </button>
+  </li>
+</ul> -->
+
+<!-- <div *ngIf="selectedAsset">
+
+  <h2>{{selectedAsset.name | uppercase}} Details</h2>
+  <div>id: {{selectedAsset.id}}</div>
+  <div>
+    <label for="asset-name">Hero name: </label>
+    <input id="asset-name" [(ngModel)]="selectedAsset.name" placeholder="name">
+  </div>
+
+</div> -->
