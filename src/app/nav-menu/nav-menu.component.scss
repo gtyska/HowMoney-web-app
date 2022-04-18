@@ -1,17 +1,21 @@
 $backgorung-color: #f9f6ff;
+
 #app-name {
   font-size: 1.2em;
 }
 
 #nav-menu {
-  // margin:2px;
-  // margin-top: 0%;
   font-size: 1.4em;
   font-weight: bold;
   font-family:'Roboto';
   height:11vh;
-  // line-height:1.2em;
   background-color: $backgorung-color;
+}
+
+.dropdown-item {
+  font-size: 1.1em;
+  font-weight: 420;
+  font-family:'Roboto';
 }
 
 li a {
@@ -19,16 +23,6 @@ li a {
   background-color: $backgorung-color;
 }
 
-// li a:hover {
-//   color: #918BC6;
-// }
-
 .navbar {
   z-index: 9999;
 }
-
-// #navbar-collapse
-// {
-//     position: absolute;
-//     z-index: 1;
-// }
