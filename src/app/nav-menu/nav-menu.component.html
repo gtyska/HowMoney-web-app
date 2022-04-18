@@ -1,4 +1,4 @@
-<div id="main-menu">
+<!-- <div id="main-menu">
   <ul class="nav navbar-expand-lg navbar-light bg-light justify-content-around">
     <li class="nav-item">
       <a class="nav-link active" routerLink="/home">Home</a>
@@ -13,5 +13,46 @@
       <a class="nav-link" routerLink="/about-us">About us</a>
     </li>
   </ul>
-</div>
+</div> -->
+
+<nav id="nav-menu" class="navbar fixed-top navbar-expand-lg navbar-light flex-md-row">
+  <a class="navbar-brand" href="/home">
+    <img src="../assets/images/logo.png" width="70" height="70" class="d-inline-block align-top" alt="">
+  </a>
+  <a id="app-name" class="navbar-brand" routerLink="/home">HowMoney</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav justify-content-between">
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/home" routerLinkActive="active">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/assets" routerLinkActive="active">Assets</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/alerts" routerLinkActive="active">Alerts</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/about-us" routerLinkActive="active">About us</a>
+      </li>
+
+    </ul>
+    <ul class="navbar-nav justify-content-end">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" routerLink="/login" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Login
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="/profile">Profile</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="/logout">Logout</a>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+
 

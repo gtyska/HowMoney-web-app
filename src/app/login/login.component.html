@@ -1,14 +1,30 @@
-<div class="mb-3 row">
-  <label for="staticEmail" class="col-sm-2 col-form-label">Email</label>
-  <div class="col-sm-10">
-    <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="email@example.com">
+<div class="content">
+
+<div>
+  <h1 class="text-center">Login</h1>
   </div>
-</div>
-<div class="mb-3 row">
-  <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
-  <div class="col-sm-10">
-    <input type="password" class="form-control" id="inputPassword">
+  <div id="form-container" class="container">
+    <form method="post">
+      <div class="form-group row">
+        <label for="input-email" class="col-sm-2 col-form-label">Email address</label>
+        <div class="col-sm-10">
+          <input type="email" class="form-control" id="input-email" autocapitalize="none" autocomplete="username" aria-describedby="email-help" placeholder="Enter email">
+          <small id="email-help" class="form-text text-muted">Your email is used only within this application. We don't share it.</small>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="input-password" class="col-sm-2 col-form-label">Password</label>
+        <div class="col-sm-10" >
+          <input type="password" class="form-control" autocomplete="current-password" required="" id="input-password" placeholder="Enter password">
+        </div>
+
+      </div>
+      <div class="d-flex justify-content-end mx-auto">
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </div>
+    </form>
   </div>
+
+
 </div>
-<p>Do not have an account?</p>
-<a>Register</a>
