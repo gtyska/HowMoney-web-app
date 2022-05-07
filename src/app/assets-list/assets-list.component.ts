@@ -5,6 +5,8 @@ import { UserAsset } from '../user-asset';
 import { ASSETS } from '../mock-assets';
 import { USER_ASSETS } from '../mock-user-assets';
 
+import { UserAssetService } from '../user-asset.service';
+
 @Component({
   selector: 'app-assets-list',
   templateUrl: './assets-list.component.html',
@@ -12,20 +14,42 @@ import { USER_ASSETS } from '../mock-user-assets';
 })
 export class AssetsListComponent implements OnInit {
   keys = ['name', 'amount'];
-  assets = USER_ASSETS;
+  userAssets: UserAsset[] = [];
   selectedAsset?: UserAsset;
 
-  constructor() { }
+  constructor(private userAssetService: UserAssetService) { }
 
   ngOnInit(): void {
+    this.getUserAssets();
   }
 
   onSelect(asset: UserAsset): void {
     this.selectedAsset = asset;
   }
 
-  delete(asset: UserAsset): void {
-    this.assets = this.assets.filter(a => a !== asset);
-    // this.assetService.deleteHero(asset.id).subscribe();  // delete from sever
+  // add(assetId: string, value: number): void {
+  //   // assetId= name.trim();
+  //   // if (!name) { return; }
+  //   this.userAssetService.addUserAsset(assetId, value)
+  //     .subscribe(asset => {
+  //       this.userAssets.push(asset);
+  //     });
+  // }
+
+  // delete(asset: UserAsset): void {
+  //   this.userAssets = this.userAssets.filter(a => a !== asset);
+  //   this.userAssetService.deleteUserAsset(asset.id).subscribe();
+  // }
+
+  getUserAssets(): void {
+    this.userAssetService.getUserAssets()
+    .subscribe(userAssets => this.userAssets = userAssets);
   }
+
+
+
+  // delete(asset: UserAsset): void {
+  //   this.userAssets = this.userAssets.filter(a => a !== asset);
+  //   // this.assetService.deleteHero(asset.id).subscribe();  // delete from sever
+  // }
 }

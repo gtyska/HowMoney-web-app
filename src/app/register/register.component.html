@@ -1,1 +1,101 @@
-<p>register works!</p>
+<div class="content">
+  <h1 class="text-center mt-4">Sign up</h1>
+  <div class="d-flex mt-5 justify-content-center">
+    <div class="w-50">
+      <form
+        *ngIf="!isLoggedIn"
+        name="form"
+        (ngSubmit)="f.form.valid && onSubmit()"
+        #f="ngForm"
+        novalidate
+      >
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input
+            type="text"
+            class="form-control"
+            name="email"
+            [(ngModel)]="form.email"
+            required
+            #email="ngModel"
+          />
+          <div class="alert alert-danger" role="alert" *ngIf="email.errors && f.submitted">
+            Email is required
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input
+            type="password" class="form-control"
+            name="password" [(ngModel)]="form.password"
+            required minlength="6"
+            #password="ngModel"
+          />
+          <div class="alert alert-danger"role="alert" *ngIf="password.errors && f.submitted">
+            <div *ngIf="password.errors['required']">
+              Password is required
+            </div>
+            <div *ngIf="password.errors['minlength']">
+              Password must be at least 6 characters
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input
+            type="text" class="form-control"
+            name="name" [(ngModel)]="form.name" required
+            #name="ngModel"
+          />
+          <div class="alert alert-danger" role="alert" *ngIf="name.errors && f.submitted">
+            Name is required
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="surname">Surame</label>
+          <input
+            type="text" class="form-control"
+            name="surname" [(ngModel)]="form.surname"
+            required
+            #surname="ngModel"
+          />
+          <div class="alert alert-danger" role="alert" *ngIf="name.errors && f.submitted">
+            Surame is required
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="my-1 mr-2" for="currencyPreference">Currency preference</label>
+          <select
+            class="custom-select my-1 mr-sm-2"
+            id="currencyPreference" name="currencyPreference"
+            [(ngModel)]="form.currencyPreference"
+            required
+            #currencyPreference="ngModel"
+          >
+            <option *ngFor="let currency of currencyPreferences"
+              value={{currency}}>{{currency}}
+            </option>
+          </select>
+          <div class="alert alert-danger" role="alert" *ngIf="currencyPreference.errors && f.submitted">
+            Currency preference is required
+          </div>
+        </div>
+
+        <div class="form-group">
+          <button class="btn btn-primary">Sign up</button>
+        </div>
+        <div class="form-group">
+          <div class="alert alert-danger" role="alert" *ngIf="f.submitted && isLoginFailed">
+            Sign up failed: {{ errorMessage }}
+          </div>
+        </div>
+      </form>
+      <div class="alert alert-success" *ngIf="isLoggedIn">
+        Signed up and logged in.
+      </div>
+    </div>
+  </div>
+</div>
+

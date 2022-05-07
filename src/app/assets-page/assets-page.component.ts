@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TokenStorageService } from '../_services/token-storage.service';
 
 @Component({
   selector: 'app-assets-page',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AssetsPageComponent implements OnInit {
 
-  constructor() { }
+  constructor(private tokenStorage: TokenStorageService) { }
+
+  currencyPreference = this.tokenStorage.getUser().currencyPreference
+  isLoggedIn = false;
 
   ngOnInit(): void {
+    if (this.tokenStorage.getToken()) {
+      this.isLoggedIn = true;
+    }
   }
 
 }

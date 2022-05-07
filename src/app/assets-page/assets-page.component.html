@@ -1,18 +1,29 @@
-<!-- <div>
-  <h1 class="text-center">Assets</h1>
-</div> -->
 <div class="content">
-  <div class="container wide-container mt-5">
+  <h1 class="mt-4 text-center">Assets</h1>
+
+  <div *ngIf="isLoggedIn" class="container wide-container mt-5">
     <div class="row">
       <div class="col-sm-4 mt-10">
         <app-add-asset></app-add-asset>
       </div>
       <div class="col-sm-8">
-        <div class="alert alert-primary justify-content-" role="alert">
-          <p class="h3">Total value in PLN: 203.23</p>
+        <div class="alert alert-primary" role="alert">
+          <p class="h3">Total value in {{currencyPreference}}: 203.23</p>
         </div>
         <app-assets-list></app-assets-list>
       </div>
+    </div>
+  </div>
+  <div *ngIf="!isLoggedIn" class="d-flex justify-content-center">
+    <div class="jumbotron">
+      <h1 class="display-7">Tracking assets sounds good?</h1>
+      <p class="lead text-center">It really is great! We are happy that you tried to reach this page.</p>
+      <hr class="my-8">
+      <p class="text-center">In order to be able to add and track your assets, please login or sign up first.</p>
+      <p class="lead d-flex justify-content-around">
+        <a class="btn btn-primary btn-lg" routerLink="/register" role="button">Sign up</a>
+        <a class="btn btn-primary btn-lg" routerLink="/login" role="button">Login</a>
+      </p>
     </div>
   </div>
 </div>

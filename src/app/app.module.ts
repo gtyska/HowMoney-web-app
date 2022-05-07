@@ -15,6 +15,9 @@ import { AssetDetailComponent } from './asset-detail/asset-detail.component';
 // import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import {MatIconModule} from '@angular/material/icon';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { authInterceptorProviders } from './_interceptors/auth.interceptor';
+import { HttpClientModule } from '@angular/common/http';
+import { AboutUsComponent } from './about-us/about-us.component';
 
 
 @NgModule({
@@ -28,15 +31,17 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     AssetsListComponent,
     AssetsPageComponent,
     AssetDetailComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    AboutUsComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    HttpClientModule,
     MatIconModule
   ],
-  providers: [],
+  providers: [authInterceptorProviders],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
