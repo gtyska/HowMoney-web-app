@@ -1,10 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Asset } from '../asset';
 import { UserAsset } from '../user-asset';
-
-import { ASSETS } from '../mock-assets';
-import { USER_ASSETS } from '../mock-user-assets';
-
 import { UserAssetService } from '../user-asset.service';
 
 @Component({
@@ -13,7 +8,7 @@ import { UserAssetService } from '../user-asset.service';
   styleUrls: ['./assets-list.component.scss']
 })
 export class AssetsListComponent implements OnInit {
-  keys = ['name', 'amount'];
+  // keys = ['name', 'amount'];
   userAssets: UserAsset[] = [];
   selectedAsset?: UserAsset;
 

@@ -1,6 +1,6 @@
 export interface UserAsset {
-  // idUser: number;
-  idAsset: number;
+  assetId: number;
   name: string;
   amount: number;
+  currencyPreferenceAmount: number;
 }

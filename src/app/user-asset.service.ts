@@ -42,12 +42,23 @@ export class UserAssetService {
   /** GET userAssets from the server */
   getUserAssets(): Observable<UserAsset[]> {
     const user = this.tokenStorageService.getUser();
-    const url = `${this.APIUrl}/userId?userId=${user.id}`;
+    const url = `${this.APIUrl}`;
     return this.http.get<UserAsset[]>(url).pipe(
         tap(_ => console.log('fetched users assets')),
         catchError(this.handleError<UserAsset[]>('getUserAsstes', []))
       );
   }
+
+  /** GET userAssets from the server */
+  getUserAssetsTotalValue(): Observable<number> {
+    const user = this.tokenStorageService.getUser();
+    const url = `${this.APIUrl}/sum`;
+    return this.http.get<number>(url).pipe(
+        tap(_ => console.log('fetched users assets')),
+        catchError(this.handleError<number>('getUserAsstes', 0))
+      );
+  }
+
 
   /** GET userAsset by id. Will 404 if id not found */
   getUserAsset(userId: string, assetId: string): Observable<UserAsset> {
