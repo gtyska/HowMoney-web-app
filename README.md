@@ -6,5 +6,5 @@ This is a website for money tracking service, where you can create your account,
 * USD
 
 ## Tech stack
-* Angular
-* Bootstrap 4.3
+![Angular](https://img.shields.io/badge/Angular-D82D2F?style=for-the-badge&logo=angular&logoColor=white)
+![Bootstrap](https://img.shields.io/badge/Bootstrap-7652B0?style=for-the-badge&logo=bootstrap&logoColor=white)
