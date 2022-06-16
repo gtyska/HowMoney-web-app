@@ -1,38 +1,69 @@
-<nav id="nav-menu" class="navbar fixed-top navbar-expand-lg navbar-light flex-md-row">
+<nav
+  id="nav-menu"
+  class="navbar fixed-top navbar-expand-lg navbar-light flex-md-row"
+>
   <a class="navbar-brand" href="/home">
-    <img src="../assets/images/logo.png" width="70" height="70" class="d-inline-block align-top" alt="">
+    <img
+      src="../assets/images/logo.png"
+      width="70"
+      height="70"
+      class="d-inline-block align-top"
+      alt=""
+    />
   </a>
   <a id="app-name" class="navbar-brand" routerLink="/home">HowMoney</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+  <button
+    class="navbar-toggler"
+    type="button"
+    data-toggle="collapse"
+    data-target="#navbarNav"
+    aria-controls="navbarNav"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+  >
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
     <ul class="navbar-nav">
       <li class="nav-item">
-        <a class="nav-link" routerLink="/home" routerLinkActive="active">Home</a>
+        <a class="nav-link" routerLink="/home" routerLinkActive="active"
+          >Home
+        </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" routerLink="/assets" routerLinkActive="active">Assets</a>
+        <a class="nav-link" routerLink="/assets" routerLinkActive="active"
+          >Assets</a
+        >
       </li>
       <li class="nav-item">
-        <a class="nav-link" routerLink="/alerts" routerLinkActive="active">Alerts</a>
+        <a class="nav-link" routerLink="/alerts" routerLinkActive="active"
+          >Alerts
+        </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" routerLink="/about-us" routerLinkActive="active">About us</a>
+        <a class="nav-link" routerLink="/about-us" routerLinkActive="active"
+          >About us
+        </a>
       </li>
     </ul>
 
     <ul class="navbar-nav ml-auto" *ngIf="!isLoggedIn">
       <li class="nav-item">
-        <a class="nav-link" routerLink="/register" routerLinkActive="active">Sign up</a>
+        <a class="nav-link" routerLink="/register" routerLinkActive="active">
+          Sign up
+        </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" routerLink="/login" routerLinkActive="active">Sign in</a>
+        <a class="nav-link" routerLink="/login" routerLinkActive="active">
+          Sign in
+        </a>
       </li>
     </ul>
     <ul class="navbar-nav ml-auto" *ngIf="isLoggedIn">
       <li class="nav-item">
-        <a class="nav-link" routerLink="/profile" routerLinkActive="active" >{{ userName }}'s Profile</a>
+        <a class="nav-link" routerLink="/profile" routerLinkActive="active"
+          >{{ userName }}'s Profile</a
+        >
       </li>
       <li class="nav-item">
         <a class="nav-link" (click)="logout()">Logout</a>
@@ -40,5 +71,3 @@
     </ul>
   </div>
 </nav>
-
-

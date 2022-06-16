@@ -23,9 +23,7 @@ export class AuthService {
     }, httpOptions)
   }
 
-
   register(email: string, name: string, surname: string, password: string, currencyPreference: string): Observable<any> {
-    // console.log('data',email, name, surname, password, currencyPreference);
     return this.http.post(ENDPOINT_API_AUTH + 'register', {
       email,
       name,

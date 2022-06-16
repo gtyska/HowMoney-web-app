@@ -6,6 +6,12 @@ import { API_URL } from '../constants';
 
 const API_URL_USER = API_URL + '/api/User/';
 
+export interface ChangeUser {
+  value: string,
+  path: string,
+  op: string,
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -18,5 +24,9 @@ export class UserService {
     {
       responseType: 'text'
     });
+  }
+
+  changeUser(changesInUser: ChangeUser[]): Observable<any> {
+    return this.http.patch(API_URL_USER, changesInUser);
   }
 }

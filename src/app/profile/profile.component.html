@@ -1,45 +1,92 @@
+<div *ngIf="isLoggedIn" class="content">
+  <h1 class="text-center mt-4">{{ form.name }}'s Profile</h1>
 
-
-<div *ngIf="isLoggedIn"class="content">
-  <h1 class="text-center mt-4">{{userName}}'s Profile</h1>
-
-  <form>
+  <form #f="ngForm" name="form">
     <div class="form-group row">
       <label for="inputName" class="col-sm-3 col-form-label">Name</label>
       <div class="col-sm-9">
-        <input type="text" [readonly]="mode == 'view'" [ngClass]="mode == 'view' ? 'form-control-plaintext' : 'form-control'" id="inputName" value={{userName}}>
+        <input
+          type="text"
+          [(ngModel)]="form.name"
+          name="name"
+          [readonly]="mode == 'view'"
+          [ngClass]="mode == 'view' ? 'form-control-plaintext' : 'form-control'"
+          id="inputName"
+        />
       </div>
     </div>
     <div class="form-group row">
       <label for="inputName" class="col-sm-3 col-form-label">Surame</label>
       <div class="col-sm-9">
-        <input type="text" [readonly]="mode == 'view'" [ngClass]="mode == 'view' ? 'form-control-plaintext' : 'form-control'" id="inputSurname" value={{userSurname}}>
+        <input
+          type="text"
+          [(ngModel)]="form.surname"
+          name="surname"
+          [readonly]="mode == 'view'"
+          [ngClass]="mode == 'view' ? 'form-control-plaintext' : 'form-control'"
+          id="inputSurname"
+          value="{{ userSurname }}"
+        />
       </div>
     </div>
     <div class="form-group row">
       <label for="inputEmail" class="col-sm-3 col-form-label">Email</label>
       <div class="col-sm-9">
-        <input type="text" [readonly]="mode == 'view'" [ngClass]="mode == 'view' ? 'form-control-plaintext' : 'form-control'" id="inputEmail" value={{userEmail}}>
+        <input
+          type="text"
+          [(ngModel)]="form.email"
+          name="email"
+          [readonly]="mode == 'view'"
+          [ngClass]="mode == 'view' ? 'form-control-plaintext' : 'form-control'"
+          id="inputEmail"
+          value="{{ userEmail }}"
+        />
       </div>
     </div>
     <div class="form-group row">
-      <label class="col-sm-3 col-form-label" for="currencyPreference">Currency preference</label>
+      <label class="col-sm-3 col-form-label" for="currencyPreference"
+        >Currency preference</label
+      >
       <div class="col-sm-9">
-        <select class="form-select mb-3" id="currencyPreference" name="currencyPreference" [disabled]="mode == 'view'" [ngClass]="mode == 'view' ? 'form-control-plaintext' : 'form-control'">
-          <option *ngFor="let currency of currencyPreferences"
+        <select
+          class="form-select mb-3"
+          [(ngModel)]="form.currencyPreference"
+          name="currencyPreference"
+          [disabled]="mode == 'view'"
+          [ngClass]="mode == 'view' ? 'form-control-plaintext' : 'form-control'"
+        >
+          <option
+            *ngFor="let currency of currencyPreferences"
             [selected]="userCurrencyPreference == currency"
-            value={{currency}}>{{currency}}
+            value="{{ currency }}"
+          >
+            {{ currency }}
           </option>
         </select>
       </div>
     </div>
     <div class="form-group row justify-content-between">
-      <button class="btn btn-primary" *ngIf="mode == 'edit'" (click)="cancelEditProfile()">Cancel</button>
-      <button class="btn btn-primary" id="editProfileButton" (click)="editProfile()">{{ mode == 'view' ? 'Edit' : 'Save'}}</button>
+      <button
+        class="btn btn-primary"
+        *ngIf="mode == 'edit'"
+        (click)="cancelEditProfile()"
+      >
+        Cancel
+      </button>
+      <button
+        class="btn btn-primary"
+        type="submit"
+        id="editProfileButton"
+        (click)="editProfile()"
+      >
+        {{ mode == "view" ? "Edit" : "Save" }}
+      </button>
     </div>
   </form>
 </div>
 
-<div *ngIf="!isLoggedIn"class="content">
-  <h1 class="text-center mt-4">You have to be logged in to see this content.</h1>
+<div *ngIf="!isLoggedIn" class="content">
+  <h1 class="text-center mt-4">
+    You have to be logged in to see this content.
+  </h1>
 </div>

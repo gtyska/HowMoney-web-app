@@ -69,8 +69,7 @@ export class UserAssetService {
   /** POST: add a new user to the server */
   addUserAsset(userAsset: UserAssetCreate): Observable<UserAsset> {
     return this.http.post<UserAsset>(this.APIUrl, userAsset, this.httpOptions).pipe(
-      tap((newUserAsset: UserAsset) => console.log(`added user asset with assetId=${newUserAsset.assetId}`)),
-      catchError(this.handleError<UserAsset>('addUserAsset'))
+      tap((newUserAsset: UserAsset) => console.log(`added user asset with assetId=${newUserAsset.assetId}`))
     );
   }
 

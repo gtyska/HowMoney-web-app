@@ -11,7 +11,6 @@ import { RegisterComponent } from './register/register.component';
 import { AssetsListComponent } from './assets-list/assets-list.component';
 import { AssetsPageComponent } from './assets-page/assets-page.component';
 import { FormsModule } from '@angular/forms';
-import { AssetDetailComponent } from './asset-detail/asset-detail.component';
 // import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import {MatIconModule} from '@angular/material/icon';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
@@ -31,7 +30,6 @@ import { ProfileComponent } from './profile/profile.component';
     RegisterComponent,
     AssetsListComponent,
     AssetsPageComponent,
-    AssetDetailComponent,
     PageNotFoundComponent,
     AboutUsComponent,
     ProfileComponent
