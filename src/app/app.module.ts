@@ -18,6 +18,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { authInterceptorProviders } from './_interceptors/auth.interceptor';
 import { HttpClientModule } from '@angular/common/http';
 import { AboutUsComponent } from './about-us/about-us.component';
+import { ProfileComponent } from './profile/profile.component';
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import { AboutUsComponent } from './about-us/about-us.component';
     AssetsPageComponent,
     AssetDetailComponent,
     PageNotFoundComponent,
-    AboutUsComponent
+    AboutUsComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,

@@ -6,6 +6,7 @@ import { AssetsPageComponent } from './assets-page/assets-page.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { ProfileComponent } from './profile/profile.component';
 import { RegisterComponent } from './register/register.component';
 
 const routes: Routes = [
@@ -16,6 +17,7 @@ const routes: Routes = [
   { path: 'assets', component: AssetsPageComponent },
   { path: 'asset-detail:id', component: AssetDetailComponent},
   { path: 'about-us', component: AboutUsComponent},
+  { path: 'profile', component: ProfileComponent},
   { path: '**', component: PageNotFoundComponent }
 ];
 

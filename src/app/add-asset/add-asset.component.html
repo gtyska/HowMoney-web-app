@@ -1,20 +1,60 @@
 <div id="div-frame" class="input-group mb-3 rounded">
   <p class="heading">Add asset</p>
+
+<form
+  name="form"
+  (ngSubmit)="f.form.valid && onSubmit()"
+  #f="ngForm" novalidate
+>
   <div class="input">
     <div class="input-group-prepend rounded">
       <span class="input-group-text" id="inputGroup-sizing-default">Type</span>
     </div>
-    <select class="form-select" aria-label="Select asset type" aria-describedby="inputGroup-sizing-default">
+    <select class="custom-select"
+    [(ngModel)]="form.assetId"
+    required
+    #assetId="ngModel" id="assetId" name="assetId" aria-label="Select asset type" aria-describedby="inputGroup-sizing-default">
       <option *ngFor="let asset of assets"
-              value={{asset.id}}>{{asset.name}}
+          value={{asset.id}}>
+          {{asset.name}}
       </option>
     </select>
+    <div class="alert alert-danger" role="alert" *ngIf="assetId.errors && f.submitted">
+      Asset type is required
+    </div>
+
   </div>
+
   <div class="input">
     <div class="input-group-prepend rounded">
       <span class="input-group-text" id="inputGroup-sizing-default">Amount</span>
     </div>
-    <input type="text" class="form-control" aria-label="Amount" aria-describedby="inputGroup-sizing-default">
+    <input type="text" class="form-control" name="amount"
+    [(ngModel)]="form.amount" required minlength="1" min="0"
+    #amount="ngModel"  id="amount" class="form-control" aria-label="Amount" aria-describedby="inputGroup-sizing-default">
+
+    <div class="alert alert-danger" role="alert" *ngIf="amount.errors && f.submitted">
+      <div *ngIf="amount.errors['required']">
+        Amount is required
+      </div>
+      <div *ngIf="amount.errors['minlength']">
+        Amount must be at least 1 character
+      </div>
+    </div>
   </div>
-  <input class="rounded" type="submit" value="Add">
+
+  <div class="form-group">
+    <button class="rounded" class="btn btn-primary">Add</button>
   </div>
+
+  <div class="form-group">
+    <div class="alert alert-danger" role="alert" *ngIf="f.submitted && isAddingFailed">
+      Adding asset failed: {{ errorMessage }}
+    </div>
+  </div>
+
+  <div class="alert alert-success" *ngIf="isAdded">
+    New asset is created.
+  </div>
+</form>
+

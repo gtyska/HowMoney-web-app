@@ -5,6 +5,7 @@
         <th scope="col" class="col-3">Asset</th>
         <th scope="col" class="col-5">Value</th>
         <th scope="col" class="col-1"></th>
+        <th scope="col" class="col-1"></th>
         <th scope="col" class="col-2"></th>
       </tr>
     </thead>
@@ -13,16 +14,25 @@
         <td class="col-3">
           {{asset.name}}
         </td>
-        <td class="col-5">
+        <td class="col-4">
           {{asset.amount}}
         </td>
         <td class="col-1">
-          <a class="btn btn-outline-primary" routerLink="/asset-detail/{{asset.assetId}}" role="button">
-            Edit
-          </a>
+          <button class="btn btn-outline-success" style="width:40px;" title="add asset" (click)="setSelectedAsset(asset)"
+            data-toggle="modal" data-target="#addModalCenter">
+            +
+          </button>
         </td>
+
+        <td class="col-1">
+          <button class="btn btn-outline-danger" style="width:40px;" title="add asset" (click)="setSelectedAsset(asset)"
+            data-toggle="modal" data-target="#substractModalCenter">
+            -
+          </button>
+        </td>
+
         <td class="col-2">
-          <button class="btn btn-outline-danger" title="delete asset" type="button">Delete</button>
+          <button class="btn btn-outline-danger" title="delete asset" (click)="deleteUserAsset(asset)" type="button" >Delete</button>
         </td>
       </tr>
     </tbody>
@@ -30,30 +40,58 @@
 </div>
 
 
+<!-- Modal add vaulue -->
+<div class="modal fade" id="addModalCenter" tabindex="-1" role="dialog" aria-labelledby="addModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Add {{selectedAsset?.name}}</h5>
+        <button type="button" id="closeModalAdd" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form (submit)="onSubmitIncrement($event)">
+          <div class="form-group row">
+            <label for="valueToAdd" class="col-sm-4 col-form-label">Value to add</label>
+            <div class="col-sm-8">
+              <input type="number" value="0" name="valueToAdd" class="form-control">
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary mb-2">Add</button>
+       </form>
+      </div>
 
-
-
-
-
-
-
-
-<!-- <ul class="assets">
-  <li *ngFor="let asset of assets">
-    <button [class.selected]="asset === selectedAsset" type="button" (click)="onSelect(asset)">
-      <span class="badge">{{asset.idAsset}}</span>
-      <span class="name">{{asset.name}}</span>
-    </button>
-  </li>
-</ul> -->
-
-<!-- <div *ngIf="selectedAsset">
-
-  <h2>{{selectedAsset.name | uppercase}} Details</h2>
-  <div>id: {{selectedAsset.id}}</div>
-  <div>
-    <label for="asset-name">Hero name: </label>
-    <input id="asset-name" [(ngModel)]="selectedAsset.name" placeholder="name">
+    </div>
   </div>
+</div>
 
-</div> -->
+
+
+<!-- Modal substract vaulue -->
+<div class="modal fade" id="substractModalCenter" tabindex="-1" role="dialog" aria-labelledby="substractModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Substract {{selectedAsset?.name}}</h5>
+        <button type="button" class="close" id="closeModalSubstract" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form (submit)="onSubmitDecrement($event)">
+          <div class="form-group row">
+            <label for="valueToSubstract" class="col-sm-4 col-form-label">Value to substract</label>
+            <div class="col-sm-8">
+              <input type="number" value="0" name="valueToSubstract" class="form-control">
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary mb-2">Substract</button>
+       </form>
+       <div class="alert alert-danger" *ngIf="isInvalidAmount">
+        The amount to substract is too big. Asset's value can't be less or equal 0.
+      </div>
+      </div>
+    </div>
+  </div>
+</div>

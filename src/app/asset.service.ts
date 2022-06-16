@@ -5,6 +5,7 @@ import { Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
 import { TokenStorageService } from './_services/token-storage.service';
+import { API_URL } from './constants';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,7 @@ export class AssetService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
 
-  private APIUrl = 'https://localhost:5001/api/Asset';
+  private APIUrl = API_URL + '/api/Asset';
 
    /**
    * Handle Http operation that failed.

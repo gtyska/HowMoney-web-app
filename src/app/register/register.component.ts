@@ -51,25 +51,6 @@ export class RegisterComponent implements OnInit {
         this.isLoginFailed = true;
       }
     })
-    // this.authService.login(email, password).subscribe({
-    //   next: data => {
-    //     this.tokenStorage.saveToken(data.token);
-    //     this.tokenStorage.saveUser(data);
-    //     this.isLoginFailed = false;
-    //     this.isLoggedIn = true;
-    //     this.reloadPage();
-    //   },
-    //   // try to simplify
-    //   error: err => {
-    //     try {
-    //       this.errorMessage = `${JSON.stringify(err.error).slice(1, -1)}`;
-    //     }
-    //     catch(error) {  // is it needed?
-    //       this.errorMessage = err.error.message;
-    //     }
-    //     this.isLoginFailed = true;
-    //   }
-    // })
   }
   reloadPage(): void {
     window.location.reload();

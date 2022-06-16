@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TokenStorageService } from '../_services/token-storage.service';
-import { UserAssetService } from '../user-asset.service';
+import { UserAssetService } from '../_services/user-asset.service';
 
 @Component({
   selector: 'app-assets-page',

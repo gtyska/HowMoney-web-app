@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import { UserAsset } from './user-asset';
+import { UserAsset, UserAssetCreate } from '../user-asset';
 import { Observable, of } from 'rxjs';
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { catchError, map, tap } from 'rxjs/operators';
-import { TokenStorageService } from './_services/token-storage.service';
+import { catchError, tap } from 'rxjs/operators';
+import { TokenStorageService } from './token-storage.service';
+import { API_URL } from '../constants';
 
 @Injectable({
   providedIn: 'root'
@@ -16,11 +17,11 @@ export class UserAssetService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
 
-  private APIUrl = 'https://localhost:5001/api/UserAsset';
+  private APIUrl = API_URL + '/api/UserAsset';
+
 
    /**
-   * Handle Http operation that failed.
-   * Let the app continue.
+   * Handle HTTP operation that failed.
    *
    * @param operation - name of the operation that failed
    * @param result - optional value to return as the observable result
@@ -28,14 +29,10 @@ export class UserAssetService {
     private handleError<T>(operation = 'operation', result?: T) {
       return (error: any): Observable<T> => {
 
-        // TODO: send the error to remote logging infrastructure
-        console.error(error); // log to console instead
-
-        // TODO: better job of transforming error for user consumption
+        console.error(error); // log error to the console
         console.log(`${operation} failed: ${error.message}`);
 
-        // Let the app keep running by returning an empty result.
-        return of(result as T);
+        return of(result as T); // app keeps running by returning an empty result
       };
     }
 
@@ -69,33 +66,30 @@ export class UserAssetService {
     );
   }
 
-  // /** PUT: update the hero on the server */
-  // updateHero(hero: Hero): Observable<any> {
-  //   const url = `${this.heroesUrl}/${hero.id}`;
-  //   return this.http.put(url, hero, this.httpOptions).pipe(
-  //     tap(_ => this.log(`updated hero id=${hero.id}`)),
-  //     catchError(this.handleError<any>('updateHero'))
-  //   );
-  // }
-
-  /** POST: add a new hero to the server */
-  addUserAsset(userAsset: UserAsset): Observable<UserAsset> {
+  /** POST: add a new user to the server */
+  addUserAsset(userAsset: UserAssetCreate): Observable<UserAsset> {
     return this.http.post<UserAsset>(this.APIUrl, userAsset, this.httpOptions).pipe(
-      // tap((newUserAsset: UserAsset) => console.log(`added user asset w/ id=${newUserAsset.assetId}`)),
-      catchError(this.handleError<UserAsset>('addHero'))
+      tap((newUserAsset: UserAsset) => console.log(`added user asset with assetId=${newUserAsset.assetId}`)),
+      catchError(this.handleError<UserAsset>('addUserAsset'))
     );
   }
 
-  // /** DELETE: delete the hero from the server */
-  // deleteHero(id: number): Observable<Hero> {
-  //   const url = `${this.heroesUrl}/${id}`;
+   /** POST: add a new user to the server */
+   editUserAsset(userAsset: UserAssetCreate): Observable<UserAsset> {
+    return this.http.put<UserAsset>(this.APIUrl, userAsset, this.httpOptions).pipe(
+      tap((newUserAsset: UserAsset) => console.log(`added user asset with assetId=${newUserAsset.assetId}`)),
+      catchError(this.handleError<UserAsset>('addUserAsset'))
+    );
+  }
 
-  //   return this.http.delete<Hero>(url, this.httpOptions).pipe(
-  //     tap(_ => this.log(`deleted hero id=${id}`)),
-  //     catchError(this.handleError<Hero>('deleteHero'))
-  //   );
-  // }
-
+  /** DELETE: add a new user to the server */
+  deleteUserAsset(assetId: number) {
+    const url = `${this.APIUrl}/${assetId}`;
+    return this.http.delete<UserAsset>(url).pipe(
+      tap(_ => console.log(`deleted user asset with assetId=${assetId}`)),
+      catchError(this.handleError<UserAsset>('deleteUserAsset') )
+    );
+  }
 
 }
 

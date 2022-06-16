@@ -43,6 +43,9 @@ export class LoginComponent implements OnInit {
         catch(error) {  // is it needed?
           this.errorMessage = err.error.message;
         }
+        if (this.errorMessage == '"isTrusted":true') {
+          this.errorMessage = "Something went wrong by the server side."
+        }
         this.isLoginFailed = true;
       }
     })

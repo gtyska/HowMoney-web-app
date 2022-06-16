@@ -4,3 +4,9 @@ export interface UserAsset {
   amount: number;
   currencyPreferenceAmount: number;
 }
+
+export interface UserAssetCreate {
+  userId: number,
+  assetId: number,
+  amount: number
+}
