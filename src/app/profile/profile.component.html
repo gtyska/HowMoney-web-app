@@ -76,12 +76,11 @@
       <button
         class="btn btn-primary"
         *ngIf="mode != 'edit'"
-        style="width: 40px"
         title="add asset"
         data-toggle="modal"
         data-target="#modalChangePassword"
       >
-        Cancel
+        Change password
       </button>
       <button
         class="btn btn-primary"
@@ -197,9 +196,20 @@
               </div>
             </div>
           </div>
-
           <button type="submit" class="btn btn-primary mb-2">Change password</button>
+          <div class="form-group">
+            <div
+              class="alert alert-danger"
+              role="alert"
+              *ngIf="f.submitted && isChangingPasswordFailed"
+            >
+              {{ errorMessage }}
+            </div>
+          </div>
         </form>
+        <div class="alert alert-success" *ngIf="isPasswordChanged">
+          Password changed succesfully.
+        </div>
       </div>
     </div>
   </div>

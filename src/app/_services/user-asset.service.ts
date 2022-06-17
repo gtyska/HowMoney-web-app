@@ -87,5 +87,4 @@ export class UserAssetService {
       catchError(this.handleError<UserAsset>('deleteUserAsset'))
     );
   }
-
 }

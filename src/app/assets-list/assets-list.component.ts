@@ -33,7 +33,6 @@ export class AssetsListComponent implements OnInit {
   deleteUserAsset(userAsset: UserAsset) {
     this.userAssets = this.userAssets.filter(u => u !== userAsset);
     this.userAssetService.deleteUserAsset(userAsset.assetId).subscribe();
-    // this.reloadPage();
   }
 
   onSubmitIncrement(event: any) {

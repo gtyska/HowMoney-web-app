@@ -32,4 +32,11 @@ export class AuthService {
       currencyPreference
     }, httpOptions)
   }
+
+  changePassword(password: string, newPassword: string) {
+    return this.http.post(ENDPOINT_API_AUTH + 'change', {
+      password,
+      newPassword
+    }, httpOptions)
+  }
 }

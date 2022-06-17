@@ -1,6 +1,7 @@
 import { DOCUMENT } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import { CURRENCY_PREFERENCE } from '../constants';
+import { AuthService } from '../_services/auth.service';
 import { TokenStorageService } from '../_services/token-storage.service';
 import { ChangeUser, UserService } from '../_services/user.service';
 
@@ -16,10 +17,13 @@ export class ProfileComponent implements OnInit {
   userSurname?: string;
   userEmail?: string;
   userCurrencyPreference?: string;
+  isPasswordChanged = false;
+  isChangingPasswordFailed = true;
+  errorMessage = "";
 
   currencyPreferences = CURRENCY_PREFERENCE;
 
-  constructor(@Inject(DOCUMENT) private document: Document, private tokenStorageService: TokenStorageService, private userService: UserService) { }
+  constructor(@Inject(DOCUMENT) private document: Document, private authService: AuthService, private tokenStorageService: TokenStorageService, private userService: UserService) { }
 
   formChangePassword: any = {
     password: null,
@@ -67,10 +71,33 @@ export class ProfileComponent implements OnInit {
   onSubmitChangePassword() {
     const user = this.tokenStorageService.getUser();
     const {password, newPassword, newPasswordConfirm} = this.formChangePassword;
-    console.log("old pwd", password);
-    console.log("new pwd", newPassword);
-    console.log("confirmed new pwd", newPasswordConfirm);
+    this.isPasswordChanged = false;
+    this.isChangingPasswordFailed = false;
+    // check if passwords match
+
     // change password // 1stly create connection with backend for it
+    this.authService.changePassword(password, newPassword).subscribe({
+      next: _ => {
+        console.log("Password is changed");
+        this.isPasswordChanged = true;
+      },
+      error: err => {
+        try {
+          console.log("Password change: error", err.error);
+          console.log("Password change: status code", err.status);
+          if (err.status == 400) {
+            this.errorMessage = "Password is incorrect."
+          }
+          else if (err.status == 500) {
+            this.errorMessage = "Server is currently not working."
+          }
+        }
+        catch(error) {
+          this.errorMessage = "Unexpected situation happened.";
+        }
+        this.isChangingPasswordFailed = true;
+      }
+    });
 
     // create msg about the status of this operation
     // display it at the bottom of the modal

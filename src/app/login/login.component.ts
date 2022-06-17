@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
         try {
           this.errorMessage = `${JSON.stringify(err.error).slice(1, -1)}`;
         }
-        catch(error) {  // is it needed?
+        catch(error) {
           this.errorMessage = err.error.message;
         }
         if (this.errorMessage == '"isTrusted":true') {
