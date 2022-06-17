@@ -75,6 +75,16 @@
       </button>
       <button
         class="btn btn-primary"
+        *ngIf="mode != 'edit'"
+        style="width: 40px"
+        title="add asset"
+        data-toggle="modal"
+        data-target="#modalChangePassword"
+      >
+        Cancel
+      </button>
+      <button
+        class="btn btn-primary"
         type="submit"
         id="editProfileButton"
         (click)="editProfile()"
@@ -89,4 +99,108 @@
   <h1 class="text-center mt-4">
     You have to be logged in to see this content.
   </h1>
+</div>
+
+
+<!-- Modal substract vaulue -->
+<div
+  class="modal fade"
+  id="modalChangePassword"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="Change Password"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <p class="modal-title h5" id="changePassword">
+          Change password
+      </p>
+        <button
+          type="button"
+          class="close"
+          id="closeModalChangePassword"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form #f="ngForm" name="formChangePassword" (submit)="onSubmitChangePassword()">
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input
+              type="password"
+              class="form-control"
+              name="password"
+              [(ngModel)]="formChangePassword.password"
+              required
+              minlength="1"
+              #password="ngModel"
+            />
+            <div
+              class="alert alert-danger"
+              role="alert"
+              *ngIf="password.errors && formChangePassword.submitted"
+            >
+              <div *ngIf="password.errors['required']">Password is required</div>
+              <div *ngIf="password.errors['minlength']">
+                Password must be at least 1 character
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="password">New password</label>
+            <input
+              type="password"
+              class="form-control"
+              name="password"
+              [(ngModel)]="formChangePassword.newPassword"
+              required
+              minlength="1"
+              #newPassword="ngModel"
+            />
+            <div
+              class="alert alert-danger"
+              role="alert"
+              *ngIf="newPassword.errors && formChangePassword.submitted"
+            >
+              <div *ngIf="newPassword.errors['required']">Password is required</div>
+              <div *ngIf="newPassword.errors['minlength']">
+                Password must be at least 1 character
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="password">Confirm new password</label>
+            <input
+              type="password"
+              class="form-control"
+              name="newPasswordConfirm"
+              [(ngModel)]="formChangePassword.newPasswordConfirm"
+              required
+              minlength="1"
+              #newPasswordConfirm="ngModel"
+            />
+            <div
+              class="alert alert-danger"
+              role="alert"
+              *ngIf="newPasswordConfirm.errors && formChangePassword.submitted"
+            >
+              <div *ngIf="newPasswordConfirm.errors['required']">Password is required</div>
+              <div *ngIf="newPasswordConfirm.errors['minlength']">
+                Password must be at least 1 character
+              </div>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary mb-2">Change password</button>
+        </form>
+      </div>
+    </div>
+  </div>
 </div>

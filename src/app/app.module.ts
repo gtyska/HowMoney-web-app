@@ -18,6 +18,9 @@ import { authInterceptorProviders } from './_interceptors/auth.interceptor';
 import { HttpClientModule } from '@angular/common/http';
 import { AboutUsComponent } from './about-us/about-us.component';
 import { ProfileComponent } from './profile/profile.component';
+import { AlertsPageComponent } from './alerts-page/alerts-page.component';
+import { AlertsListComponent } from './alerts-list/alerts-list.component';
+import { AddAlertComponent } from './add-alert/add-alert.component';
 
 
 @NgModule({
@@ -32,7 +35,10 @@ import { ProfileComponent } from './profile/profile.component';
     AssetsPageComponent,
     PageNotFoundComponent,
     AboutUsComponent,
-    ProfileComponent
+    ProfileComponent,
+    AlertsPageComponent,
+    AlertsListComponent,
+    AddAlertComponent
   ],
   imports: [
     BrowserModule,

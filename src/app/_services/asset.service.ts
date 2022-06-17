@@ -43,7 +43,7 @@ export class AssetService {
   getAssets(): Observable<Asset[]> {
     const url = `${this.APIUrl}`;
     return this.http.get<Asset[]>(url).pipe(
-      tap((_) => console.log('fetched users assets')),
+      tap((_) => console.log('fetched assets')),
       catchError(this.handleError<Asset[]>('getAsstes', []))
     );
   }

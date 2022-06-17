@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { Component, Inject, OnInit } from '@angular/core';
 import { CURRENCY_PREFERENCE } from '../constants';
 import { TokenStorageService } from '../_services/token-storage.service';
 import { ChangeUser, UserService } from '../_services/user.service';
@@ -18,7 +19,13 @@ export class ProfileComponent implements OnInit {
 
   currencyPreferences = CURRENCY_PREFERENCE;
 
-  constructor(private tokenStorageService: TokenStorageService, private userService: UserService) { }
+  constructor(@Inject(DOCUMENT) private document: Document, private tokenStorageService: TokenStorageService, private userService: UserService) { }
+
+  formChangePassword: any = {
+    password: null,
+    newPassword: null,
+    newPasswordConfirm: null
+  };
 
   form: any = {
     name: null,
@@ -57,8 +64,23 @@ export class ProfileComponent implements OnInit {
     this.mode = "view";
   }
 
+  onSubmitChangePassword() {
+    const user = this.tokenStorageService.getUser();
+    const {password, newPassword, newPasswordConfirm} = this.formChangePassword;
+    console.log("old pwd", password);
+    console.log("new pwd", newPassword);
+    console.log("confirmed new pwd", newPasswordConfirm);
+    // change password // 1stly create connection with backend for it
+
+    // create msg about the status of this operation
+    // display it at the bottom of the modal
+    // if it wont work just to this:
+    // this.document.getElementById("closeModalChangePassword")?.click();
+
+  }
+
   changeProfileData() {
-    console.log("Changes profile data");
+    console.log("Change profile data");
     const user = this.tokenStorageService.getUser();
     const {name, surname, email, currencyPreference} = this.form;
     let wasSomeChanges: boolean = false;
@@ -72,7 +94,6 @@ export class ProfileComponent implements OnInit {
         op: "replace",
       }
       changedUserObjects.push(objectNewName);
-      // user.name = name;
       wasSomeChanges = true;
     }
     if (surname != undefined && surname != user.surname) {
@@ -82,7 +103,6 @@ export class ProfileComponent implements OnInit {
         op: "replace",
       }
       changedUserObjects.push(objectNewSurname);
-      // user.surname = surname;
       wasSomeChanges = true;
     }
     if (email != undefined && email != user.email) {
@@ -92,7 +112,6 @@ export class ProfileComponent implements OnInit {
         op: "replace",
       }
       changedUserObjects.push(objectNewEmail);
-      // user.email = email;
       wasSomeChanges = true;
     }
     if (currencyPreference != undefined && currencyPreference != user.currencyPreference) {
@@ -102,7 +121,6 @@ export class ProfileComponent implements OnInit {
         op: "replace",
       }
       changedUserObjects.push(objectNewCurrencyPreference);
-      // user.currencyPreference = currencyPreference;
       wasSomeChanges = true;
     }
     if(wasSomeChanges) {
@@ -120,8 +138,6 @@ export class ProfileComponent implements OnInit {
           this.form.currencyPreference = user.currencyPreference;
         }
       );
-
-
     }
   }
 

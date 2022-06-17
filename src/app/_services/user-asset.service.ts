@@ -19,22 +19,21 @@ export class UserAssetService {
 
   private APIUrl = API_URL + '/api/UserAsset';
 
-
-   /**
+  /**
    * Handle HTTP operation that failed.
    *
    * @param operation - name of the operation that failed
    * @param result - optional value to return as the observable result
    */
-    private handleError<T>(operation = 'operation', result?: T) {
-      return (error: any): Observable<T> => {
+  private handleError<T>(operation = 'operation', result?: T) {
+    return (error: any): Observable<T> => {
 
-        console.error(error); // log error to the console
-        console.log(`${operation} failed: ${error.message}`);
+      console.error(error); // log error to the console
+      console.log(`${operation} failed: ${error.message}`);
 
-        return of(result as T); // app keeps running by returning an empty result
-      };
-    }
+      return of(result as T); // app keeps running by returning an empty result
+    };
+  }
 
   /** GET userAssets from the server */
   getUserAssets(): Observable<UserAsset[]> {
@@ -56,7 +55,6 @@ export class UserAssetService {
       );
   }
 
-
   /** GET userAsset by id. Will 404 if id not found */
   getUserAsset(userId: string, assetId: string): Observable<UserAsset> {
     const url = `${this.APIUrl}/${userId}%2C${assetId}`;
@@ -73,8 +71,8 @@ export class UserAssetService {
     );
   }
 
-   /** POST: add a new user to the server */
-   editUserAsset(userAsset: UserAssetCreate): Observable<UserAsset> {
+  /** POST: add a new user to the server */
+  editUserAsset(userAsset: UserAssetCreate): Observable<UserAsset> {
     return this.http.put<UserAsset>(this.APIUrl, userAsset, this.httpOptions).pipe(
       tap((newUserAsset: UserAsset) => console.log(`added user asset with assetId=${newUserAsset.assetId}`)),
       catchError(this.handleError<UserAsset>('addUserAsset'))
@@ -86,37 +84,8 @@ export class UserAssetService {
     const url = `${this.APIUrl}/${assetId}`;
     return this.http.delete<UserAsset>(url).pipe(
       tap(_ => console.log(`deleted user asset with assetId=${assetId}`)),
-      catchError(this.handleError<UserAsset>('deleteUserAsset') )
+      catchError(this.handleError<UserAsset>('deleteUserAsset'))
     );
   }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  // /* GET heroes whose name contains search term */
-  // searchHeroes(term: string): Observable<Hero[]> {
-  //   if (!term.trim()) {
-  //     // if not search term, return empty hero array.
-  //     return of([]);
-  //   }
-  //   return this.http.get<Hero[]>(`${this.heroesUrl}/?name=${term}`).pipe(
-  //     tap(x => x.length ?
-  //       this.log(`found heroes matching "${term}"`) :
-  //       this.log(`no heroes matching "${term}"`)),
-  //     catchError(this.handleError<Hero[]>('searchHeroes', []))
-  //   );
-  // }
-

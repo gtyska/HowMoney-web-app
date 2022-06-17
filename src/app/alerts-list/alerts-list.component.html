@@ -1,0 +1,39 @@
+<div class="table-responsive">
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col" class="col-3">Alert</th>
+        <th scope="col" class="col-5">Value</th>
+        <th scope="col" class="col-1">Currency</th>
+        <th scope="col" class="col-1"></th>
+        <th scope="col" class="col-2"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let alert of alerts">
+        <td class="col-3">
+          {{ alert.asset_name }}
+        </td>
+        <td class="col-4">
+          {{ alert.value }}
+        </td>
+        <td class="col-1">
+          {{ alert.currency }}
+        </td>
+        <td class="col-1">
+        </td>
+
+        <td class="col-2">
+          <button
+            class="btn btn-outline-danger"
+            title="delete alert"
+            (click)="deleteAlert(alert)"
+            type="button"
+          >
+            Delete
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
