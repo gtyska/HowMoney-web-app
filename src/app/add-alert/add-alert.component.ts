@@ -7,6 +7,7 @@ import { TokenStorageService } from '../_services/token-storage.service';
 import { Alert, AlertCreate } from '../alert';
 import { AlertService } from '../alert.service';
 import { CURRENCY_PREFERENCE } from '../constants';
+import { AlertsListService } from '../alerts-list.service';
 
 @Component({
   selector: 'app-add-alert',
@@ -29,17 +30,18 @@ export class AddAlertComponent implements OnInit {
   };
 
   constructor(private assetService: AssetService, private alertService: AlertService,
-    private tokenStorageService: TokenStorageService) { }
+    private tokenStorageService: TokenStorageService,
+    private alertsListService: AlertsListService) { }
 
   ngOnInit(): void {
     this.getAssets();
   }
 
-     // is this method used?
-  selectAsset(event: any): void {
-    this.selectedAsset = event.target.value;
-    console.log('selected asset', this.selectAsset);
-  }
+  //    // is this method used?
+  // selectAsset(event: any): void {
+  //   this.selectedAsset = event.target.value;
+  //   console.log('selected asset', this.selectAsset);
+  // }
 
   getAssets(): void {
     this.assetService.getAssets()
@@ -59,8 +61,9 @@ export class AddAlertComponent implements OnInit {
 
     console.log('Alert to create', alert);
     this.alertService.addAlert(alert).subscribe({
-      next: _ => {
+      next: createdAlert => {
         this.isAdded = true;
+        this.alertsListService.addToAlertList(createdAlert);
       },
       error: err => {
         try {

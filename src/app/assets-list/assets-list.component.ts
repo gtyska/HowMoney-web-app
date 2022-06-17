@@ -18,7 +18,8 @@ export class AssetsListComponent implements OnInit {
   userAssets: UserAsset[] = [];
   selectedAsset?: UserAsset;
   valueToAdd: number = 0;
-  isInvalidAmount = false;
+  isInvalidAmountDecrement = false;
+  isInvalidAmountIncrement = false;
 
   constructor(private router: Router, @Inject(DOCUMENT) private document: Document,
     private userAssetService: UserAssetService, private tokenStorageService: TokenStorageService,
@@ -40,12 +41,6 @@ export class AssetsListComponent implements OnInit {
   setSelectedAsset(userAsset: UserAsset) {
     this.selectedAsset = userAsset;
   }
-
-  // getUserAssets(): void {
-  //   this.userAssetService.getUserAssets()
-  //   .subscribe(userAssets => this.userAssets = userAssets.sort((a, b) => a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1)
-  //   );
-  // }
 
   getUserAssets(): void {
     this.userAssetService.getUserAssets()
@@ -83,7 +78,7 @@ export class AssetsListComponent implements OnInit {
   }
 
   onSubmitIncrement(event: any) {
-    this.isInvalidAmount = false;
+    this.isInvalidAmountIncrement = false;
     let valueToAdd = event.target.valueToAdd.value;
     if (this.selectedAsset != undefined) {
       let oldUserAssetAmount = this.selectedAsset?.amount;
@@ -95,29 +90,35 @@ export class AssetsListComponent implements OnInit {
         assetId: this.selectedAsset.assetId,
         amount: newUserAssetAmount
       }
+      if(newUserAssetAmount <= 0) {
+        this.isInvalidAmountIncrement = true;
+      }
+      else {
+        this.selectedAsset.amount = newUserAssetAmount;
+        console.log('Changed user asset amount to:', newUserAssetAmount);
+        this.userAssetService.editUserAsset(userAsset).subscribe({
+          next: _ => {
+            this.getNewTotalAssetsValue();
+          }
+        });
+        this.selectedAsset.amount = newUserAssetAmount;
+        this.document.getElementById("closeModalAdd")?.click();
+        event.target.valueToAdd.value = 0;
+      }
 
-      this.selectedAsset.amount = newUserAssetAmount;
-      console.log('Changed user asset amount to:', newUserAssetAmount);
-      this.userAssetService.editUserAsset(userAsset).subscribe({
-        next: _ => {
-          this.getNewTotalAssetsValue();
-        }
-      });
-      this.selectedAsset.amount = newUserAssetAmount;
-      this.document.getElementById("closeModalAdd")?.click();
-      event.target.valueToAdd.value = 0;
+
     }
   }
 
   onSubmitDecrement(event: any) {
-    this.isInvalidAmount = false;
+    this.isInvalidAmountDecrement = false;
     let valueToSubstract = event.target.valueToSubstract.value;
     if (this.selectedAsset != undefined) {
       let oldUserAssetAmount = this.selectedAsset?.amount;
       let newUserAssetAmount: number = Number(oldUserAssetAmount) - Number(valueToSubstract);
 
       if(newUserAssetAmount <= 0) {
-        this.isInvalidAmount = true;
+        this.isInvalidAmountDecrement = true;
       }
 
       else {

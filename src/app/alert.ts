@@ -6,7 +6,6 @@ export interface Alert {
   asset_type: string;
 }
 
-
 export interface AlertCreate {
   value: number;
   currency: string;

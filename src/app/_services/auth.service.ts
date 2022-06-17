@@ -39,4 +39,9 @@ export class AuthService {
       newPassword
     }, httpOptions)
   }
+
+  resetPassword(email: string) {
+    const url = ENDPOINT_API_AUTH + 'reset/' + email;
+    return this.http.post(url, null, httpOptions);
+  }
 }

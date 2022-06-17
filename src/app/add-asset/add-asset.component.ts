@@ -5,6 +5,7 @@ import { UserAsset, UserAssetCreate } from '../user-asset';
 import { UserAssetService } from '../_services/user-asset.service';
 import { TokenStorageService } from '../_services/token-storage.service';
 import { AssetsListService } from '../assets-list.service';
+import { TotalAssetValueService } from '../total-asset-value.service';
 
 
 @Component({
@@ -27,10 +28,16 @@ export class AddAssetComponent implements OnInit {
 
   constructor(private assetService: AssetService, private userAssetService: UserAssetService,
     private tokenStorageService: TokenStorageService,
-    private assetListService: AssetsListService) { }
+    private assetListService: AssetsListService,
+    private totalValueService: TotalAssetValueService,) { }
 
   ngOnInit(): void {
     this.getAssets();
+  }
+
+  getNewTotalAssetsValue(): void {
+    this.userAssetService.getUserAssetsTotalValue()
+    .subscribe(totalValue => this.totalValueService.sendValue(totalValue));
   }
 
   updateAssetsList(asset: UserAsset, isAdding: boolean){
@@ -69,6 +76,7 @@ export class AddAssetComponent implements OnInit {
         this.isAdded = true;
         const isAdding = true;
         this.updateAssetsList(createdUserAsset, isAdding);
+        this.getNewTotalAssetsValue();
       },
       error: err => {
         try {

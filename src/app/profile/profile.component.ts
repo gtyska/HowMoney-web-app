@@ -15,7 +15,7 @@ export class ProfileComponent implements OnInit {
   isLoggedIn = false;
   userName?: string;
   userSurname?: string;
-  userEmail?: string;
+  // userEmail?: string;
   userCurrencyPreference?: string;
   isPasswordChanged = false;
   isChangingPasswordFailed = true;
@@ -34,7 +34,7 @@ export class ProfileComponent implements OnInit {
   form: any = {
     name: null,
     surname: null,
-    email: null,
+    // email: null,
     currencyPreference: null
   };
 
@@ -66,6 +66,7 @@ export class ProfileComponent implements OnInit {
 
   cancelEditProfile() {
     this.mode = "view";
+    this.ngOnInit();
   }
 
   onSubmitChangePassword() {
@@ -74,36 +75,37 @@ export class ProfileComponent implements OnInit {
     this.isPasswordChanged = false;
     this.isChangingPasswordFailed = false;
     // check if passwords match
-
-    // change password // 1stly create connection with backend for it
-    this.authService.changePassword(password, newPassword).subscribe({
-      next: _ => {
-        console.log("Password is changed");
-        this.isPasswordChanged = true;
-      },
-      error: err => {
-        try {
-          console.log("Password change: error", err.error);
-          console.log("Password change: status code", err.status);
-          if (err.status == 400) {
-            this.errorMessage = "Password is incorrect."
+    console.log("New password", newPassword);
+    console.log("Confirmed new password", newPasswordConfirm);
+    if(newPassword !== newPasswordConfirm) {
+      this.isChangingPasswordFailed = true;
+      this.errorMessage = "New passwords don't match."
+    }
+    else {
+      // change password // 1stly create connection with backend for it
+      this.authService.changePassword(password, newPassword).subscribe({
+        next: data => {
+          console.log("Password is changed");
+          this.isPasswordChanged = true;
+        },
+        error: err => {
+          try {
+            console.log("Password change: error", err.error);
+            console.log("Password change: status code", err.status);
+            if (err.status == 400) {
+              this.errorMessage = "Password is incorrect."
+            }
+            else if (err.status == 500) {
+              this.errorMessage = "Server is currently not working."
+            }
           }
-          else if (err.status == 500) {
-            this.errorMessage = "Server is currently not working."
+          catch(error) {
+            this.errorMessage = "Unexpected situation happened.";
           }
+          this.isChangingPasswordFailed = true;
         }
-        catch(error) {
-          this.errorMessage = "Unexpected situation happened.";
-        }
-        this.isChangingPasswordFailed = true;
-      }
-    });
-
-    // create msg about the status of this operation
-    // display it at the bottom of the modal
-    // if it wont work just to this:
-    // this.document.getElementById("closeModalChangePassword")?.click();
-
+      });
+    }
   }
 
   changeProfileData() {
@@ -111,6 +113,7 @@ export class ProfileComponent implements OnInit {
     const user = this.tokenStorageService.getUser();
     const {name, surname, email, currencyPreference} = this.form;
     let wasSomeChanges: boolean = false;
+    // let wasEmailChanged = false;
     console.log("Name form input", name);
     console.log("Name form token", user.name);
     let changedUserObjects: ChangeUser[] =[];
@@ -132,15 +135,16 @@ export class ProfileComponent implements OnInit {
       changedUserObjects.push(objectNewSurname);
       wasSomeChanges = true;
     }
-    if (email != undefined && email != user.email) {
-      let objectNewEmail: ChangeUser = {
-        value: email,
-        path: "Email",
-        op: "replace",
-      }
-      changedUserObjects.push(objectNewEmail);
-      wasSomeChanges = true;
-    }
+    // if (email != undefined && email != user.email) {
+    //   let objectNewEmail: ChangeUser = {
+    //     value: email,
+    //     path: "Email",
+    //     op: "replace",
+    //   }
+    //   changedUserObjects.push(objectNewEmail);
+    //   wasSomeChanges = true;
+    //   wasEmailChanged = true;
+    // }
     if (currencyPreference != undefined && currencyPreference != user.currencyPreference) {
       let objectNewCurrencyPreference: ChangeUser = {
         value: currencyPreference,
@@ -156,7 +160,7 @@ export class ProfileComponent implements OnInit {
           console.log(data.currencyPreference);
           user.name = data.name;
           user.surname = data.surname;
-          user.email = data.email;
+          // user.email = data.email;
           user.currencyPreference = data.currencyPreference;
           this.tokenStorageService.saveUser(user);
           this.form.email = user.email;

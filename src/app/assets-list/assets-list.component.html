@@ -101,6 +101,9 @@
           </div>
           <button type="submit" class="btn btn-primary mb-2">Add</button>
         </form>
+        <div class="alert alert-danger" *ngIf="isInvalidAmountIncrement">
+          Final asset's value can't be less or equal 0.
+        </div>
       </div>
     </div>
   </div>
@@ -149,7 +152,7 @@
           </div>
           <button type="submit" class="btn btn-primary mb-2">Substract</button>
         </form>
-        <div class="alert alert-danger" *ngIf="isInvalidAmount">
+        <div class="alert alert-danger" *ngIf="isInvalidAmountDecrement">
           The amount to substract is too big. Asset's value can't be less or
           equal 0.
         </div>
