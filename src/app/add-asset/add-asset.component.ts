@@ -4,6 +4,7 @@ import { AssetService } from '../_services/asset.service';
 import { UserAsset, UserAssetCreate } from '../user-asset';
 import { UserAssetService } from '../_services/user-asset.service';
 import { TokenStorageService } from '../_services/token-storage.service';
+import { AssetsListService } from '../assets-list.service';
 
 
 @Component({
@@ -25,10 +26,20 @@ export class AddAssetComponent implements OnInit {
   };
 
   constructor(private assetService: AssetService, private userAssetService: UserAssetService,
-    private tokenStorageService: TokenStorageService) { }
+    private tokenStorageService: TokenStorageService,
+    private assetListService: AssetsListService) { }
 
   ngOnInit(): void {
     this.getAssets();
+  }
+
+  updateAssetsList(asset: UserAsset, isAdding: boolean){
+    if(isAdding) {
+      this.assetListService.addToAssetList(asset);
+    }
+    else {
+      this.assetListService.deleteFromAssetList(asset);
+    }
   }
 
   // is this method used?
@@ -54,8 +65,10 @@ export class AddAssetComponent implements OnInit {
     }
     console.log('User asset to create', userAsset);
     this.userAssetService.addUserAsset(userAsset).subscribe({
-      next: _ => {
+      next: createdUserAsset => {
         this.isAdded = true;
+        const isAdding = true;
+        this.updateAssetsList(createdUserAsset, isAdding);
       },
       error: err => {
         try {

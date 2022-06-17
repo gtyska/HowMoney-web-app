@@ -3,6 +3,10 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { UserAsset, UserAssetCreate } from '../user-asset';
 import { UserAssetService } from '../_services/user-asset.service';
 import { TokenStorageService } from '../_services/token-storage.service';
+import { Router } from '@angular/router';
+import { TotalAssetValueService } from '../total-asset-value.service';
+import { AssetsListService } from '../assets-list.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-assets-list',
@@ -10,12 +14,24 @@ import { TokenStorageService } from '../_services/token-storage.service';
   styleUrls: ['./assets-list.component.scss']
 })
 export class AssetsListComponent implements OnInit {
+  subscription?: Subscription;
   userAssets: UserAsset[] = [];
   selectedAsset?: UserAsset;
   valueToAdd: number = 0;
   isInvalidAmount = false;
 
-  constructor(@Inject(DOCUMENT) private document: Document, private userAssetService: UserAssetService, private tokenStorageService: TokenStorageService) { }
+  constructor(private router: Router, @Inject(DOCUMENT) private document: Document,
+    private userAssetService: UserAssetService, private tokenStorageService: TokenStorageService,
+    private totalValueService: TotalAssetValueService,
+    private assetListService: AssetsListService) {
+      this.subscription = this.assetListService.getAssetList().subscribe(assetList => {
+        if (assetList) {
+          this.userAssets = assetList;
+        } else {
+          this.userAssets = [];
+        }
+      });
+    }
 
   ngOnInit(): void {
     this.getUserAssets();
@@ -25,14 +41,45 @@ export class AssetsListComponent implements OnInit {
     this.selectedAsset = userAsset;
   }
 
+  // getUserAssets(): void {
+  //   this.userAssetService.getUserAssets()
+  //   .subscribe(userAssets => this.userAssets = userAssets.sort((a, b) => a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1)
+  //   );
+  // }
+
+  getUserAssets(): void {
+    this.userAssetService.getUserAssets()
+    .subscribe(userAssets => this.assetListService.sendAssetList(userAssets));
+  }
+
+  updateAssetsList(asset: UserAsset, isAdding: boolean){
+    if(isAdding) {
+      this.assetListService.addToAssetList(asset);
+    }
+    else {
+      this.assetListService.deleteFromAssetList(asset);
+    }
+  }
+
+  getNewTotalAssetsValue(): void {
+    this.userAssetService.getUserAssetsTotalValue()
+    .subscribe(totalValue => this.totalValueService.sendValue(totalValue));
+  }
+
   onSelect(asset: UserAsset): void {
     console.log(this.selectedAsset);
     this.selectedAsset = asset;
   }
 
   deleteUserAsset(userAsset: UserAsset) {
-    this.userAssets = this.userAssets.filter(u => u !== userAsset);
-    this.userAssetService.deleteUserAsset(userAsset.assetId).subscribe();
+    // this.userAssets = this.userAssets.filter(u => u !== userAsset);
+    this.userAssetService.deleteUserAsset(userAsset.assetId).subscribe(
+      response => {
+        this.getNewTotalAssetsValue();
+        const isAdding = false;
+        this.updateAssetsList(userAsset, isAdding);
+      }
+    );
   }
 
   onSubmitIncrement(event: any) {
@@ -53,7 +100,7 @@ export class AssetsListComponent implements OnInit {
       console.log('Changed user asset amount to:', newUserAssetAmount);
       this.userAssetService.editUserAsset(userAsset).subscribe({
         next: _ => {
-          // this.reloadPage();
+          this.getNewTotalAssetsValue();
         }
       });
       this.selectedAsset.amount = newUserAssetAmount;
@@ -85,20 +132,15 @@ export class AssetsListComponent implements OnInit {
         console.log('Changed user asset amount to:', newUserAssetAmount);
         this.userAssetService.editUserAsset(userAsset).subscribe({
           next: _ => {
-            // this.reloadPage();
+            this.getNewTotalAssetsValue();
           }
         });
         this.selectedAsset.amount = newUserAssetAmount;
         this.document.getElementById("closeModalSubstract")?.click();
         event.target.valueToSubstract.value = 0;
+
       }
     }
-  }
-
-  getUserAssets(): void {
-    this.userAssetService.getUserAssets()
-    .subscribe(userAssets => this.userAssets = userAssets.sort((a, b) => a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1)
-    );
   }
 
 }
